@@ -59,3 +59,16 @@ class TSL2561():
 		else :
 			lux = 0
 		return lux
+	
+if __name__ == "__main__":
+	bus = smbus.SMBus(1)
+	# default address of TSL2561 is 0x39
+	tsl =  TSL2561(addr=0x39,bus=bus)
+	tsl._start()
+	try :
+		while True :
+			lux = tsl.get_lux()
+			print("Lux = {}".format(lux))
+			time.sleep(1) # wait for 1 second
+	except KeyboardInterrupt:
+		tsl._stop()
