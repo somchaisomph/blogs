@@ -4,7 +4,6 @@ import time
 import datetime
 import asyncio
 import smbus
-import concurrent.futures 
 import logging
 
 def dif_millis(start_time):
