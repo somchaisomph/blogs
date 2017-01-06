@@ -1,7 +1,7 @@
 import smbus
 import time
 import asyncio
-
+# Reference : https://cdn-shop.adafruit.com/datasheets/TSL2561.pdf
 class TSL2561():
 	def __init__(self,addr=0x39,bus=None,chan=1):
 		self.addr = addr	
