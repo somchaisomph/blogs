@@ -60,15 +60,13 @@ class TSL2561():
 			lux = 0
 		return lux
 
-@asyncio.coroutine
-def detect_light():
 	
 if __name__ == "__main__":
 
 	tsl =  TSL2561(addr=0x39,bus=smbus.SMBus(1),chan=1)
 	tsl._start()
 	try :
-			while True :
+		while True :
 		    lux = tlsr.get_lux()
 		    print("Lux = {}".format(lux))
 		    time.sleep(1)
