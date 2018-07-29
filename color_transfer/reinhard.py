@@ -65,16 +65,10 @@ t_lab =  np.dot(p1, t_log10_lms)
 
 # to statistics
 s_mean = np.mean(s_lab,axis=1)
-
 s_std  = np.std(s_lab,axis=1)
 
-
-
 t_mean = np.mean(t_lab,axis=1)
-
 t_std  = np.std(t_lab,axis=1)
-
-
 
 sf = t_std/s_std
 
@@ -96,4 +90,20 @@ d = np.array([[4.4679, -3.5873, 0.1193],[-1.2186, 2.3809, -0.1624],[0.0497, -0.2
 est_im = np.dot(d,LMS_res).T
 result = est_im.reshape((ro,co,3)); # reshape the image
 
+fig=plt.figure(figsize=(30,10))
+fig.add_subplot(1,3,1)
+plt.imshow(s_img_1)
+plt.title('Source')
+plt.axis('off')
 
+fig.add_subplot(1,3,2)
+plt.imshow(t_img_1)
+plt.title('Target')
+plt.axis('off')
+
+fig.add_subplot(1,3,3)
+plt.imshow(result)
+plt.title('Result')
+plt.axis('off')
+
+plt.show()
