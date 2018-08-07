@@ -1,3 +1,5 @@
+import numpy as np
+
 class LinearReg():
     def __init__(self):
         self._iter = 1000
