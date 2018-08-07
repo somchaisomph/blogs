@@ -60,3 +60,14 @@ class LinearReg():
         u = np.sum(np.power(Y - self.predict(X) ,2))
         v = np.sum(np.power(Y - Y.mean(),2))
         return 1 - u/v
+
+    
+    if __name__ == "__main__":
+        X = np.array([[1],[2],[3],[4],[5]])
+        Y = np.array([[1],[2],[3],[4],[5]])
+        lr = LinearReg()
+        lr.iteration = 1000
+        lr.fit(X,Y)
+        print(lr.beta)
+        print(lr.predict(np.array([[7],[8],[100]])))
+        print(lr.r2(X,Y))
