@@ -75,7 +75,7 @@ class SimpleRegr(LinRegr):
         return 1 - u/v
 #--------------------------------------------------------------------------------    
 class LogisticRegr(LinRegr):
-     def fit(self,X,Y):
+    def fit(self,X,Y):
         X = np.insert(X,0,1,axis=1) # inject X0 into input vector with value 1
         num_x = X.shape[0] # number of rows
         _beta = np.zeros(X.shape[1]) # create beta vector 
@@ -103,7 +103,7 @@ def test_simple_regr():
     
     X = np.array([[1],[2],[3],[4],[5]])
     Y = np.array([[1],[2],[3],[4],[5]])
-    lr = LinearReg()
+    lr = SimpleRegr()
     lr.iteration = 1000
     lr.fit(X,Y)
     print(lr.beta)
@@ -111,7 +111,7 @@ def test_simple_regr():
     print(lr.r2(X,Y))
 
 def test_logistic():
-    logr = LogisticReg()
+    logr = LogisticRegr()
     logr.iteration = 1000
     X = np.array([[1,3],[3,5],[5,7]])
     Y = np.array([[1,0,0]])
