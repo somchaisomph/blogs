@@ -82,7 +82,6 @@ class LogisticRegr(LinRegr):
         for i in range(self.iteration):
             output = self.sigmoid(X.dot(_beta.T))            
             _error = Y - output 
-            #print("eror {}".format(_error[0]))
             _beta += (self.learning_rate/num_x) * X.dot(_error[0].T)
         self.beta = _beta
     
@@ -100,3 +99,26 @@ class LogisticRegr(LinRegr):
         return np.exp(h)/(1 + np.exp(h))
 
 #--------------------------------------------------------------------------------        
+def test_simple_regr():
+    
+    X = np.array([[1],[2],[3],[4],[5]])
+    Y = np.array([[1],[2],[3],[4],[5]])
+    lr = LinearReg()
+    lr.iteration = 1000
+    lr.fit(X,Y)
+    print(lr.beta)
+    print(lr.predict(np.array([[7],[8],[100]])))
+    print(lr.r2(X,Y))
+
+def test_logistic():
+    logr = LogisticReg()
+    logr.iteration = 1000
+    X = np.array([[1,3],[3,5],[5,7]])
+    Y = np.array([[1,0,0]])
+    logr.fit(X,Y)
+    print(logr.beta)
+    print(logr.predict(np.array([[3,5]])))
+
+if __name__ == "__main__":
+    test_simple_regr()
+    test_logistic()
