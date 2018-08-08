@@ -1,4 +1,6 @@
-class Regression():
+import numpy as np
+
+class LinRegr():
     def __init__(self):
         self._iter = 1000
         self._lr = 0.1
@@ -37,4 +39,64 @@ class Regression():
         
     def r2(self,X,Y):
         pass
+
+#--------------------------------------------------------------------------------    
+
+class SimpleRegr(LinRegr):
+    def fit(self,X,Y):
+        X = np.insert(X,0,1,axis=1) # inject X0 into input vector with value 1
+        
+        _beta = np.zeros(X.shape[1]) # create beta vector 
+        for i in range(self.iteration):
+            for x,y in zip(X,Y):
+                output = x.dot(_beta)
+                _error = y - output 
+                _beta = _beta + self.learning_rate * _error * x
+        self.beta = _beta
     
+    def predict(self,X):
+        if self.beta is not None :
+            X = np.insert(X,0,1,axis=1) 
+            res= X.dot(self.beta)
+            return res.reshape((X.shape[0],1))
+            
+        else :
+            return None        
+        
+    def r2(self,X,Y):
+        '''
+        r2 is defined by 1-u/v
+        where 
+        u = sum of (observ - predict)^2
+        v = sum of (observ - mean of observ)^2
+        '''
+        u = np.sum(np.power(Y - self.predict(X) ,2))
+        v = np.sum(np.power(Y - Y.mean(),2))
+        return 1 - u/v
+#--------------------------------------------------------------------------------    
+class LogisticRegr(LinRegr):
+     def fit(self,X,Y):
+        X = np.insert(X,0,1,axis=1) # inject X0 into input vector with value 1
+        num_x = X.shape[0] # number of rows
+        _beta = np.zeros(X.shape[1]) # create beta vector 
+        for i in range(self.iteration):
+            output = self.sigmoid(X.dot(_beta.T))            
+            _error = Y - output 
+            #print("eror {}".format(_error[0]))
+            _beta += (self.learning_rate/num_x) * X.dot(_error[0].T)
+        self.beta = _beta
+    
+    def predict(self,X):
+        if self.beta is not None :
+            X = np.insert(X,0,1,axis=1) 
+            res = self.sigmoid(X.dot(self.beta.T))
+            res = np.where(res >= 0.5,1,0)
+            return res.astype(int)
+            
+        else :
+            return None
+        
+    def sigmoid(self,h):
+        return np.exp(h)/(1 + np.exp(h))
+
+#--------------------------------------------------------------------------------        
