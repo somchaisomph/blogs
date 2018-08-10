@@ -76,14 +76,16 @@ class SimpleRegr(LinRegr):
 #--------------------------------------------------------------------------------    
 class LogisticRegr(LinRegr):
     def fit(self,X,Y):
-        X = np.insert(X,0,1,axis=1) # inject X0 into input vector with value 1
-        num_x = X.shape[0] # number of rows
-        _beta = np.zeros(X.shape[1]) # create beta vector 
-        for i in range(self.iteration):
-            output = self.sigmoid(X.dot(_beta.T))            
-            _error = Y - output 
-            _beta += (self.learning_rate/num_x) * X.dot(_error[0].T)
-        self.beta = _beta
+        X = np.insert(X,0,1,axis=1) # inject X0 into input vector 
+		num_x = X.shape[0] # number of rows
+		_beta = np.zeros((X.shape[1],1)) # create beta vector 
+		for i in range(self.iteration):
+			z = X.dot(_beta)
+			h = self.sigmoid(z)
+			e = Y - h
+			g = np.dot(X.T,e)
+			_beta += (self.learning_rate/num_x) * g
+		self.beta = _beta
     
     def predict(self,X):
         if self.beta is not None :
@@ -96,7 +98,7 @@ class LogisticRegr(LinRegr):
             return None
         
     def sigmoid(self,h):
-        return np.exp(h)/(1 + np.exp(h))
+        return 1/(1 + np.exp(-h))
 
 #--------------------------------------------------------------------------------        
 def test_simple_regr():
