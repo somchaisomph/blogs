@@ -154,7 +154,6 @@ print("Epoch : {}, best fitness : {}".format(epoch,fn))
 
 
 # -- plot 
-import matplotlib.pyplot as plt
 
 t =[]
 pt =[]
